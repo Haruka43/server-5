@@ -36,19 +36,52 @@
 
         // GETリクエスト
         async getData() {
-          const res = await fetch('/api');
+          const res = await fetch(`/api/users/${this.name}`, {
+            method: 'GET'
+          });
           const data = await res.json();
           this.data = JSON.stringify(data, null, 2);
         },
 
         // POSTリクエスト
-        async postData() {},
+        async postData() {
+          const formData = new FormData();
+          formData.append('name', this.name);
+          formData.append('rank', this.rank);
+          const res = await fetch('/api', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          this.data = JSON.stringify(data, null, 2);
+        },
 
         // PUTリクエスト
-        async putData() {},
+        async putData() {
+          const body = { name: this.name, rank: this.rank };
+          const res = await fetch('/api', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          this.data = JSON.stringify(data, null, 2);
+        },
 
         // DELETEリクエスト
-        async deleteData() {}
+        async deleteData() {
+          const formData = new FormData();
+          formData.append('name', this.name);
+          formData.append('rank', this.rank);
+          const res = await fetch('/api', {
+            method: 'DELETE',
+            body: formData
+          });
+          const data = await res.json();
+          this.data = JSON.stringify(data, null, 2);
+        }
       };
     }
   </script>
